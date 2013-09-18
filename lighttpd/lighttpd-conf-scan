@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import os
+
+web_root = '/var/www'
+conf_directory = 'etc'
+
+def print_conf_file(file_name):
+	buffer = ''
+	buffer += open(file_name, 'r').read()
+	print buffer
+
+# sanitize script config
+if not web_root.endswith(os.sep):
+	web_root += os.sep
+
+if not conf_directory.endswith(os.sep):
+	conf_directory += os.sep
+
+# look for lighttpd conf file for domain
+web_root_directories  = os.listdir(web_root)
+for directory in web_root_directories:
+	conf_path = os.path.join(web_root, directory, conf_directory)
+	if os.path.isdir(conf_path):
+		conf_path += 'lighttpd.conf'
+		if os.path.isfile(conf_path):
+			print_conf_file(conf_path)
+
+
