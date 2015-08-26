@@ -1,0 +1,18 @@
+#!/bin/bash
+
+GIT_CMD=`which git`
+
+function usage {
+  echo "usage: $(basename $0) <user.name> <user.email>"
+  echo "runs: git config --local user.*"
+}
+
+if [ -z "$1" ]; then
+  usage
+  exit
+fi
+
+$GIT_CMD config --local user.name $1 && \
+$GIT_CMD config --local user.email $2 && \
+# output new config values
+$GIT_CMD config --local --get-regexp ^user
